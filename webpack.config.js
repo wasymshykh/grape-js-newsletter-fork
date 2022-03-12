@@ -1,29 +1,36 @@
-var path = require('path');
-var webpack = require('webpack');
-var pkg = require('./package.json');
-var name = 'grapesjs-preset-newsletter';
-var env = process.env.WEBPACK_ENV;
-var plugins = [];
+const path = require('path');
+const webpack = require('webpack');
+const TerserPlugin = require("terser-webpack-plugin");
+const pkg = require('./package.json');
+const name = 'grapesjs-preset-newsletter';
+const env = process.env.WEBPACK_ENV;
+const plugins = [];
 
 if(env !== 'dev'){
-  plugins.push(new webpack.optimize.UglifyJsPlugin({ compressor: { warnings: false } }));
+  // plugins.push(new webpack.optimize.UglifyJsPlugin({ compressor: { warnings: false } }));
   plugins.push(new webpack.BannerPlugin(pkg.name + ' - ' + pkg.version));
 }
 
 module.exports = {
   entry: './src',
   output: {
-      filename: './dist/' + name + '.min.js',
+      filename: '../public/dist/' + name + '.min.js',
       library: name,
       libraryTarget: 'umd',
   },
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js$/,
       loader: 'babel-loader',
       include: /src/,
-      exclude: /node_modules/
+      exclude: [
+        /node_modules/
+      ]
     }],
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
   },
   externals: {'grapesjs': 'grapesjs'},
   plugins: plugins

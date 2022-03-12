@@ -1,5 +1,4 @@
-define(function() {
-  return (opt = {}) => {
+export default (opt = {}) => {
     let tableStyleStr = '';
     let cellStyleStr = '';
     let editor = opt.editor;
@@ -142,7 +141,7 @@ define(function() {
       `<table class="grid-item-card">
         <tr>
           <td class="grid-item-card-cell">
-            <img class="grid-item-image" src="http://placehold.it/250x150/78c5d6/fff/" alt="Image"/>
+            <img class="grid-item-image" src="https://picsum.photos/250/250?image=0" alt="Image"/>
             <table class="grid-item-card-body">
               <tr>
                 <td class="grid-item-card-content">
@@ -172,7 +171,7 @@ define(function() {
             <table class="list-item-content">
               <tr class="list-item-row">
                 <td class="list-cell-left">
-                  <img class="list-item-image" src="http://placehold.it/150x150/78c5d6/fff/" alt="Image"/>
+                  <img class="list-item-image" src="https://picsum.photos/150/150?image=0" alt="Image"/>
                 </td>
                 <td class="list-cell-right">
                   <h1 class="card-title">Title here</h1>
@@ -190,4 +189,4 @@ define(function() {
       attributes: {class:'fa fa-th-list'}
     });
   };
-})
+  

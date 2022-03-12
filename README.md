@@ -4,6 +4,8 @@ This preset configures GrapesJS to be used as a Newsletter Builder with some uni
 
 Demo: http://grapesjs.com/demo-newsletter-editor.html
 
+Original Repository: https://github.com/artf/grapesjs-preset-newsletter
+
 <p align="center"><img src="http://grapesjs.com/img/grapesjs-preset-newsletter.jpg" alt="GrapesJS" width="500" align="center"/></p>
 <br/>
 
@@ -52,14 +54,7 @@ Demo: http://grapesjs.com/demo-newsletter-editor.html
 
 ## Download
 
-Download using one of the options:
-
-* `npm i grapesjs-preset-newsletter` or `yarn add grapesjs-preset-newsletter`
-* Latest release link https://github.com/artf/grapesjs-preset-newsletter/releases/latest
-* CDN 
-  * https://unpkg.com/grapesjs-preset-newsletter 
-  * https://unpkg.com/grapesjs-preset-newsletter/dist/grapesjs-preset-newsletter.css
-
+Download repo
 
 ## Usage
 
@@ -77,8 +72,6 @@ Download using one of the options:
       plugins: ['gjs-preset-newsletter'],
       pluginsOpts: {
         'gjs-preset-newsletter': {
-          modalTitleImport: 'Import template',
-          // ... other options
         }
       }
   });
@@ -91,8 +84,8 @@ Download using one of the options:
 Clone the repository
 
 ```sh
-$ git clone https://github.com/artf/grapesjs-preset-newsletter.git
-$ cd grapesjs-preset-newsletter
+$ git clone https://github.com/wasymshykh/grape-js-newsletter-fork.git
+$ cd grape-js-newsletter-fork
 ```
 
 Install dependencies
@@ -111,6 +104,7 @@ Start the dev server
 
 ```sh
 $ npm start
+$ npm run build:css
 ```
 
 

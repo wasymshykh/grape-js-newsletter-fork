@@ -1,5 +1,13 @@
 @import "gjs_variables.scss";
 
+.#{$app-prefix}one-bg {
+  background-color: $mainColor;
+}
+
+.#{$app-prefix}clm-tags {
+  display: none;
+}
+
 .#{$app-prefix}clm-tags .#{$app-prefix}sm-title,
 .#{$app-prefix}sm-sector .#{$app-prefix}sm-title {
   border-top: none;

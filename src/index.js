@@ -1,4 +1,8 @@
 import grapesjs from 'grapesjs';
+import importCommands from './commands.js';
+import importBlocks from './blocks.js';
+import importButtons from './buttons.js';
+import importStyle from './style.js';
 
 export default grapesjs.plugins.add('gjs-preset-newsletter', (editor, opts) => {
   let c = opts || {};
@@ -68,18 +72,18 @@ export default grapesjs.plugins.add('gjs-preset-newsletter', (editor, opts) => {
         properties:[{
           property: 'margin',
           properties:[
-            { name: 'Top', property: 'margin-top'},
-            { name: 'Left', property: 'margin-left'},
-            { name: 'Right', property: 'margin-right'},
-            { name: 'Bottom', property: 'margin-bottom'}
+            { name: 'Top', property: 'margin-top', units: ['px', '%']},
+            { name: 'Left', property: 'margin-left', units: ['px', '%']},
+            { name: 'Right', property: 'margin-right', units: ['px', '%']},
+            { name: 'Bottom', property: 'margin-bottom', units: ['px', '%']}
           ],
         },{
           property  : 'padding',
           properties:[
-            { name: 'Top', property: 'padding-top'},
-            { name: 'Right', property: 'padding-right'},
-            { name: 'Bottom', property: 'padding-bottom'},
-            { name: 'Left', property: 'padding-left'}
+            { name: 'Top', property: 'padding-top', units: ['px', '%']},
+            { name: 'Right', property: 'padding-right', units: ['px', '%']},
+            { name: 'Bottom', property: 'padding-bottom', units: ['px', '%']},
+            { name: 'Left', property: 'padding-left', units: ['px', '%']}
           ],
         }],
       },{
@@ -87,7 +91,8 @@ export default grapesjs.plugins.add('gjs-preset-newsletter', (editor, opts) => {
         open: false,
         buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-align', 'text-decoration', 'font-style', 'vertical-align', 'text-shadow'],
         properties:[
-          { name: 'Font', property: 'font-family'},
+          { name: 'Font size', property: 'font-size', units: ['px', 'rem'] },
+          { name: 'Font family', property: 'font-family' },
           { name: 'Weight', property: 'font-weight'},
           { name: 'Font color', property: 'color'},
           {
@@ -139,7 +144,7 @@ export default grapesjs.plugins.add('gjs-preset-newsletter', (editor, opts) => {
       },{
         name: 'Decorations',
         open: false,
-        buildProps: ['background-color', 'border-collapse', 'border-radius', 'border', 'background'],
+        buildProps: ['background-color', 'border-collapse', 'border-radius', 'box-shadow', 'border', 'background'],
         properties: [{
           property: 'background-color',
           name: 'Background',
@@ -160,18 +165,17 @@ export default grapesjs.plugins.add('gjs-preset-newsletter', (editor, opts) => {
             { value: 'collapse', name: 'Yes'}
           ],
         },
-        /*
-        { // Too much low support
+        { 
           property: 'box-shadow',
           properties: [
-            { name: 'X position', property: 'box-shadow-h'},
-            { name: 'Y position', property: 'box-shadow-v'},
-            { name: 'Blur', property: 'box-shadow-blur'},
-            { name: 'Spread', property: 'box-shadow-spread'},
-            { name: 'Color', property: 'box-shadow-color'},
+            { name: 'X', property: 'box-shadow-h', default: '2px', units: ['px', 'rem'], type: 'number' },
+            { name: 'Y', property: 'box-shadow-v', default: '2px', units: ['px', 'rem'], type: 'number' },
+            { name: 'Blur', property: 'box-shadow-blur', default: '5px', units: ['px', 'rem'], type: 'number' },
+            { name: 'Spread', property: 'box-shadow-spread', default: '3px', units: ['px', 'rem'], type: 'number' },
+            { name: 'Color', property: 'box-shadow-color', default: 'rgba(0,0,0,0.2)', type: 'color' },
             { name: 'Shadow type', property: 'box-shadow-type'}
           ],
-        },*/{
+        }, {
           property: 'border',
           properties: [
             { name: 'Width', property: 'border-width', defaults: '0'},
@@ -201,19 +205,15 @@ export default grapesjs.plugins.add('gjs-preset-newsletter', (editor, opts) => {
   }
 
   // Add commands
-  let importCommands = require('./commands');
   importCommands(c);
 
   // Add blocks
-  let importBlocks = require('./blocks');
   importBlocks(c);
 
   // Add buttons
-  let importButtons = require('./buttons');
   importButtons(c);
 
   // Load style manager
-  let importStyle = require('./style');
   importStyle(c);
 
   // On component change show the Style Manager
@@ -238,36 +238,24 @@ export default grapesjs.plugins.add('gjs-preset-newsletter', (editor, opts) => {
 
   // Do stuff on load
   editor.on('load', function() {
-    var expTplBtn = editor.Panels.getButton('options', 'export-template');
-    expTplBtn.set('attributes', {
-      title: defaults.expTplBtnTitle
-    });
-    var fullScrBtn = editor.Panels.getButton('options', 'fullscreen');
-    fullScrBtn.set('attributes', {
-      title: defaults.fullScrBtnTitle
-    });
-    var swichtVwBtn = editor.Panels.getButton('options', 'sw-visibility');
-    swichtVwBtn.set('attributes', {
-      title: defaults.swichtVwBtnTitle
-    });
-    var openSmBtn = editor.Panels.getButton('views', 'open-sm');
-    openSmBtn.set('attributes', {
-      title: defaults.openSmBtnTitle
-    });
-    var openTmBtn = editor.Panels.getButton('views', 'open-tm');
-    openTmBtn.set('attributes', {
-      title: defaults.openTmBtnTitle
-    });
-    var openLayersBtn = editor.Panels.getButton('views', 'open-layers');
-    openLayersBtn.set('attributes', {
-      title: defaults.openLayersBtnTitle
-    });
+
+    editor.Panels.removeButton("options", 'export-template');
+    editor.Panels.removeButton("options", 'sw-visibility');
+    editor.Panels.removeButton("views", "open-sm");
+    editor.Panels.removeButton("views", "open-tm");
+    editor.Panels.removeButton("views", "open-layers");
+
     // Open block manager
     var openBlocksBtn = editor.Panels.getButton('views', 'open-blocks');
       openBlocksBtn.set('attributes', {
       title: defaults.openBlocksBtnTitle
     });
     openBlocksBtn && openBlocksBtn.set('active', 1);
-    //editor.trigger('change:canvasOffset');
+
+    let styleManager = editor.StyleManager;
+    let fontProperty = styleManager.getProperty('typography', 'font-family');
+    fontProperty.set('options', [ {value: "'Roboto', sans-serif", name: 'Roboto'} ]);
+
   });
+
 });

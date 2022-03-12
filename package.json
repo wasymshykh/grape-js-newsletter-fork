@@ -2,13 +2,13 @@
   "name": "grapesjs-preset-newsletter",
   "version": "0.2.21",
   "description": "GrapesJS preset configuration for the newsletter editor",
-  "main": "dist/grapesjs-preset-newsletter.min.js",
+  "main": "public/dist/grapesjs-preset-newsletter.min.js",
   "scripts": {
     "lint": "eslint src",
     "build": "cross-env WEBPACK_ENV=prod && npm run v:patch && webpack && npm run build:css",
-    "build:css": "node-sass src/style/main.scss dist/grapesjs-preset-newsletter.css",
+    "build:css": "node-sass src/style/main.scss public/dist/grapesjs-preset-newsletter.css",
     "v:patch": "npm version --no-git-tag-version patch",
-    "start": "cross-env WEBPACK_ENV=dev ./node_modules/.bin/webpack-dev-server --progress --colors & npm run build:css -- -w",
+    "start": "cross-env WEBPACK_ENV=prod webpack watch --progress --color --mode=production",
     "test": "jest"
   },
   "keywords": [
@@ -31,10 +31,12 @@
   "devDependencies": {
     "@babel/core": "^7.17.5",
     "@babel/preset-env": "^7.16.11",
+    "@babel/preset-stage-3": "^7.8.3",
     "babel-loader": "^8.2.3",
     "cross-env": "^7.0.3",
     "eslint": "^8.10.0",
     "jest": "^27.5.1",
+    "terser-webpack-plugin": "^5.3.1",
     "webpack": "^5.70.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.7.4"

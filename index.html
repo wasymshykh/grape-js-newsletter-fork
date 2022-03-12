@@ -3,18 +3,15 @@
   <head>
     <meta charset="utf-8">
     <title>GrapesJS Newsletter Editor</title>
-    <link rel="stylesheet" href="//unpkg.com/grapesjs@0.10.7/dist/css/grapes.min.css">
+    <link rel="stylesheet" href="//unpkg.com/grapesjs@0.18.3/dist/css/grapes.min.css">
     <link rel="stylesheet" href="./style/material.css">
     <link rel="stylesheet" href="./style/tooltip.css">
-    <link rel="stylesheet" href="./style/toastr.min.css">
     <link rel="stylesheet" href="./dist/grapesjs-preset-newsletter.css">
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="//unpkg.com/grapesjs@0.10.7/dist/grapes.min.js"></script>
+    <script src="//unpkg.com/grapesjs@0.18.3/dist/grapes.min.js"></script>
     <script src="./dist/grapesjs-preset-newsletter.min.js"></script>
-    <script src="./js/toastr.min.js"></script>
 
-    <script src="./private/ajaxable.min.js"></script>
   </head>
   <style>
     body, html{ height: 100%; margin: 0;}
@@ -610,27 +607,6 @@
         },
       });
 
-      //fa fa-refresh
-      var statusFormElC = document.querySelector('.form-status');
-      var statusFormEl = document.querySelector('.form-status i');
-      var ajaxTest = ajaxable(testContainer).
-        onStart(function(){
-          statusFormEl.className = 'fa fa-refresh anim-spin';
-          statusFormElC.style.opacity = '1';
-          statusFormElC.className = 'form-status';
-        })
-        .onResponse(function(res){
-          if (res.data) {
-            statusFormElC.style.opacity = '0';
-            statusFormEl.removeAttribute('data-tooltip');
-            md.close();
-          } else if(res.errors){
-            statusFormEl.className = 'fa fa-exclamation-circle';
-            statusFormEl.setAttribute('data-tooltip', res.errors);
-            statusFormElC.className = 'form-status text-danger';
-          }
-        });
-
       // Add info command
       var infoContainer = document.getElementById("info-cont");
       cmdm.add('open-info', {
@@ -660,14 +636,7 @@
 
       // Simple warn notifier
       var origWarn = console.warn;
-      toastr.options = {
-        closeButton: true,
-        preventDuplicates: true,
-        showDuration: 250,
-        hideDuration: 150
-      };
       console.warn = function (msg) {
-        toastr.warning(msg);
         origWarn(msg);
       };
 
